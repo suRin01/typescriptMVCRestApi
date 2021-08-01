@@ -1,57 +1,57 @@
-const responseFactory = require("../util/responseFactory");
-const dbMapper = require("../mapper/mapper");
-const qureyMap = require("../common/constants").mapperStrings;
-
+import responseFactory from "../util/responseFactory";
+import dbMapper from "../mapper/mapper";
+import {query} from "../common/constants";
 
 async function getUserList(){
-    // const result = await db.getUserList();
-    const result = await dbMapper(qureyMap.getUserList);
-    if(result !== false){
-        return responseFactory(true, result);
-    }
-    else{
-        return responseFactory(false);
-    }
+	// const result = await db.getUserList();
+	const result = await dbMapper(query.getUserList);
+
+	if(result !== false){
+		return responseFactory.createResult(true,);
+	}
+	else{
+		return responseFactory.createResult(false);
+	}
 }
 
 async function insertUser(id: string, age: string, name: string){
-    // TODO: check age is integer or return false
-    if(isNaN(parseInt(age))){
-        return responseFactory(false);
-    }
+	// TODO: check age is integer or return false
+	if(isNaN(parseInt(age))){
+		return responseFactory.createResult(false);
+	}
 
-    // TODO: excute mapper function, return ture or false
-    // const result = await db.insertUser(id, age, name);
-    const result = await dbMapper(qureyMap.insertUser, [id, age, name]);
+	// TODO: excute mapper function, return ture or false
+	// const result = await db.insertUser(id, age, name);
+	const result = await dbMapper(query.insertUser, [id, age, name]);
     
-    responseFactory(result);
+	responseFactory.createResult(result);
 }
 
 async function deleteUser(id: string){
-    // TODO: excute mapper function, return ture or false
-    // const result = await db.deleteUser(id);
-    const result = await dbMapper(qureyMap.deleteUser, [id]);
+	// TODO: excute mapper function, return ture or false
+	// const result = await db.deleteUser(id);
+	const result = await dbMapper(query.deleteUser, [id]);
     
-    return responseFactory(result);
+	return responseFactory.createResult(result);
 }
 
 async function patchUser(id: string, age: string){
-    // TODO: check age is integer or return false
-    if(isNaN(parseInt(age))){
-        return responseFactory(false);
-    }
+	// TODO: check age is integer or return false
+	if(isNaN(parseInt(age))){
+		return responseFactory.createResult(false);
+	}
 
-    // TODO: excute mapper function, return ture or false
-    // const result = await db.patchUser(id, age);
-    const result = await dbMapper(qureyMap.patchUser, [id, age]);
+	// TODO: excute mapper function, return ture or false
+	// const result = await db.patchUser(id, age);
+	const result = await dbMapper(query.patchUser, [id, age]);
     
-    return responseFactory(result);
+	return responseFactory.createResult(result);
 }
 
 
-module.exports = {
-    getUserList: getUserList,
-    insertUser: insertUser,
-    patchUser: patchUser,
-    deleteUser: deleteUser
+export = {
+	getUserList,
+	insertUser,
+	patchUser,
+	deleteUser
 };
